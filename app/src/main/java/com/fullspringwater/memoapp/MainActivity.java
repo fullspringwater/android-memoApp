@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editKeyword;
     ImageView imgSearch;
     ImageView imgCancel;
-    
+
     // 깃허브 연동완료
     @Override
     protected void onCreate(Bundle savedInstanceState) {
