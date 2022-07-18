@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +86,41 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
                 // editKeyword의 문자열을 지운다.
                 editKeyword.setText("");
+            }
+        });
+
+        editKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // 키워드 검색 에디트텍스트에 글자를 쓸 때마다,
+                // 자동으로 해당 검색어를 가져와서, 디비에서 쿼리해서
+                // 검색 결과를 화면에 표시해주는 기능 개발
+                // 부하가 많이 걸리는 방법
+                // 상황에 맞게 사용해야한다.
+                String keyword = editKeyword.getText().toString().trim();
+
+                if(keyword.length()<2){return;}
+
+                DatabaseHandler db = new DatabaseHandler(MainActivity.this);
+                // DB에서 주소록 데이터중 keyword를 포함한 데이터를 모두 가져와서,
+                // 리사이클러뷰에 표시한다.
+                memoList = db.getSearchedMemo(keyword);
+                adapter = new MemoAdapter(MainActivity.this, memoList);
+
+                recyclerView.setAdapter(adapter);
+
+
+
             }
         });
         printSearchDBData();
