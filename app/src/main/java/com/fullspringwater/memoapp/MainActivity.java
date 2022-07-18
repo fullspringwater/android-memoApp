@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         imgSearch = findViewById(R.id.imgSearch);
         editKeyword = findViewById(R.id.editKeyword);
+
+        // 검색버튼 눌렀을 때
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,18 +57,21 @@ public class MainActivity extends AppCompatActivity {
                 if(keyword.isEmpty()){
                     return;
                 }
-                // DB에서 주소록 데이터를 모두 가져와서, 리사이클러뷰에 표시한다.
+                // DB에서 주소록 데이터중 keyword를 포함한 데이터를 모두 가져와서,
+                // 리사이클러뷰에 표시한다.
                 DatabaseHandler db = new DatabaseHandler(MainActivity.this);
                 memoList = db.getSearchedMemo(keyword);
                 adapter = new MemoAdapter(MainActivity.this, memoList);
 
                 recyclerView.setAdapter(adapter);
 
+                // editKeyword의 문자열을 지운다.
                 editKeyword.setText("");
             }
         });
 
         imgCancel = findViewById(R.id.imgCancel);
+        // 취소버튼 눌렀을 때
         imgCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter = new MemoAdapter(MainActivity.this, memoList);
 
                 recyclerView.setAdapter(adapter);
-
+                // editKeyword의 문자열을 지운다.
                 editKeyword.setText("");
             }
         });
